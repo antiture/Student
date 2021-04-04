@@ -1,0 +1,70 @@
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace studentmanagement3
+{
+    public class Startup
+    {
+        private readonly IConfiguration _configuration;
+
+        //ctor . tab tab
+        
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddRazorPages();
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+
+            //app.UseHttpsRedirection();
+            //app.UseStaticFiles();
+
+            //app.UseRouting();
+
+            //app.UseAuthorization();
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapRazorPages();
+            //});
+            app.Run(async (context) =>
+            {
+                /*进程名*/
+                var processName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
+                /*appsetting.json>MyKey*/
+                var configVal = Configuration["MyKey"];
+                await context.Response.WriteAsync( configVal);
+
+            });
+        }
+    }
+}

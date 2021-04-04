@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+      <!-- 指定框架 -->
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <!-- 指定托管方式 -->
+    <AspNetCoreHostingModel>InProgress</AspNetCoreHostingModel>
+  </PropertyGroup>
+	
+	
+
+</Project>
