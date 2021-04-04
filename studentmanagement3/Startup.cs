@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,10 @@ namespace studentmanagement3
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+
+        //ctor . tab tab
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -40,16 +45,25 @@ namespace studentmanagement3
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            //app.UseHttpsRedirection();
+            //app.UseStaticFiles();
 
-            app.UseRouting();
+            //app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapRazorPages();
+            //});
+            app.Run(async (context) =>
             {
-                endpoints.MapRazorPages();
+                /*进程名*/
+                var processName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
+                /*appsetting.json>MyKey*/
+                var configVal = Configuration["MyKey"];
+                await context.Response.WriteAsync( configVal);
+
             });
         }
     }
